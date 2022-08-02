@@ -7,7 +7,7 @@ import pytest
 
 
 
-
+"""
 def test_get_poster_url_uses_default_size():
    # Przygotowanie danych
    poster_api_path = "some-poster-path"
@@ -61,10 +61,10 @@ def test_get_single_movie_cast():
 
    cast = tmdb_client.get_single_movie_cast(100)
    assert type(cast) == type(mock_movie_cast)
-
+"""
 ###################################################
 
-
+"""
 @pytest.mark.parametrize('test_input, expected',
                          [("popular", 200),
                           ("now_playing", 200),
@@ -98,4 +98,32 @@ def test_homepage(monkeypatch, test_input, expected):
 
    movies_list = tmdb_client.get_movies_list(list_type=test_input)
    assert  mock_movies_list == movies_list
+"""
+"""
+@pytest.mark.parametrize('input_value, expected_value', ( 
+                        ('now_playing', 200),
+                        ('popular', 200),
+                        ('top_rated', 200),
+                        ('upcoming', 200)
+                     ))
+"""
+"""
+@pytest.mark.parametrize('input_value', ( 
+                        'now_playing',
+                        'popular',
+                        'top_rated',
+                        'upcoming'
+                     ))
+"""
+
+def test_homepage(monkeypatch):
+   api_mock = Mock(return_value={'results': []})
+   monkeypatch.setattr("tmdb_client.get_movies", api_mock)
+
+   with app.test_client() as client:
+       response = client.get('/')
+       assert response.status_code == 200
+       api_mock.assert_called_once_with(how_many=8, list_type='top_rated')
+
+       
 

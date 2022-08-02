@@ -1,15 +1,15 @@
 from flask import Flask, render_template, request
 import tmdb_client
+from waitress import serve
 
 app = Flask(__name__)
 
 
-movies_lists = ["top_rated", "upcoming", "popular", "now_playing"]
-
-
-@app.route('/')
+@app.route('/', methods = ['GET'])
 def homepage():
     selected_list = request.args.get('list_type', "popular")
+    movies_lists = ["top_rated", "upcoming", "popular", "now_playing"]
+    list_type = selected_list
     if selected_list in movies_lists:
         movies = tmdb_client.get_movies(how_many=8, list_type=selected_list)
     else:
@@ -32,5 +32,9 @@ def utility_processor():
     return {"tmdb_image_url": tmdb_image_url}
 
 
+#if __name__ == "__main__":
+#    app.run(debug=True)
+
 if __name__ == "__main__":
-    app.run(debug=True)
+    #app.run('0.0.0.0',port=server_port)
+    serve(app)

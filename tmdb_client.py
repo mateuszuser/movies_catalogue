@@ -1,13 +1,12 @@
 import requests
 
-API_TOKEN = "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJlNWQ2NDM5ZjcxMzE3MGE3YjRhOTNlOTJlZTAxODAyMyIsInN1YiI6IjYyYzJkN2U5YTMxM2I4MDA0YzQ5NWY5ZCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.91Gya0tmh2PZ7AychdwU9NFji5eoGXXqFUZzK8NHYOY"
-
+import os
+API_TOKEN = os.environ.get("TMDB_API_TOKEN", "")
 
 def get_popular_movies():
     endpoint = "https://api.themoviedb.org/3/movie/popular"
-    api_token = "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJlNWQ2NDM5ZjcxMzE3MGE3YjRhOTNlOTJlZTAxODAyMyIsInN1YiI6IjYyYzJkN2U5YTMxM2I4MDA0YzQ5NWY5ZCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.91Gya0tmh2PZ7AychdwU9NFji5eoGXXqFUZzK8NHYOY"
     headers = {
-        "Authorization": f"Bearer {api_token}"
+        "Authorization": f"Bearer {API_TOKEN}"
     }
     response = requests.get(endpoint, headers=headers)
     return response.json()
@@ -54,3 +53,19 @@ def get_movies_list(list_type):
     response.raise_for_status()
     return response.json()
 
+##################test_mod14
+
+"""def call_tmdb_api(endpoint):
+   full_url = f"https://api.themoviedb.org/3/{endpoint}"
+   headers = {
+       "Authorization": f"Bearer {API_TOKEN}"
+   }
+   response = requests.get(full_url, headers=headers)
+   response.raise_for_status()
+   return response.json()
+
+
+def get_movies_list(list_type):
+   return call_tmdb_api(f"movie/{list_type}")"""
+
+#print(call_tmdb_api("movie/now_playing"))
