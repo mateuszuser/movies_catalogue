@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request
 import tmdb_client
-from waitress import serve
+#from waitress import serve
 
 app = Flask(__name__)
 
@@ -32,9 +32,9 @@ def utility_processor():
     return {"tmdb_image_url": tmdb_image_url}
 
 
-#if __name__ == "__main__":
-#    app.run(debug=True)
-
 if __name__ == "__main__":
+    app.run(debug=True)
+
+#if __name__ == "__main__":
     #app.run('0.0.0.0',port=server_port)
-    serve(app)
+#    serve(app)
